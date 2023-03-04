@@ -24,6 +24,7 @@ public class CConexion {
     public Connection establecerConexion(){
         Connection conn = null;
         try {
+            checkDB();
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(url, username, password);
@@ -46,5 +47,23 @@ public class CConexion {
         return conn;
 
     }
-           
+    public void checkDB(){
+       
+        String databaseName = "estudianteDB";
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;user=root;password=;encrypt=true;trustServerCertificate=true";
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT name FROM sys.databases WHERE name = '" + databaseName + "'");
+            if (resultSet.next()) {
+                System.out.println("Database " + databaseName + " exists.");
+            } else {
+                System.out.println("Database " + databaseName + " does not exist.");
+                statement.executeUpdate("CREATE DATABASE " + databaseName);
+                System.out.println("Database " + databaseName + " created successfully.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }      
 }
