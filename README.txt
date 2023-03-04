@@ -1,8 +1,5 @@
-EL NOMBRE DE LA BASE DE DATOS SE LLAMA estudianteDB (Se debe Crear manualmente en SQL Server 2019)
-
-Script>
-CREATE DATABASE estudianteDB;
-Go
+https://www.youtube.com/watch?v=uoDEtKDpUIY&t=1608s&ab_channel=SinRuedaTecnol%C3%B3gica
+Video de Referencia
 
 
 
