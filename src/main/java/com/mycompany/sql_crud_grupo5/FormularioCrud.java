@@ -4,18 +4,22 @@
  */
 package com.mycompany.sql_crud_grupo5;
 
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author PC
  */
 public class FormularioCrud extends javax.swing.JFrame {
 
+    CConexion objetoCConexion = new CConexion();
     /**
      * Creates new form FormularioCrud
      */
     public FormularioCrud() {
         initComponents();
-        
+
         CConexion objetoCConexion = new CConexion();
         objetoCConexion.establecerConexion();
     }
@@ -46,6 +50,7 @@ public class FormularioCrud extends javax.swing.JFrame {
         btn_edit = new javax.swing.JButton();
         txt_delete = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        btn_save1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_students = new javax.swing.JTable();
 
@@ -96,6 +101,14 @@ public class FormularioCrud extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setText("Datos Estudiantes");
 
+        btn_save1.setBackground(new java.awt.Color(153, 204, 0));
+        btn_save1.setText("Imprimir");
+        btn_save1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_save1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,7 +149,9 @@ public class FormularioCrud extends javax.swing.JFrame {
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -166,11 +181,13 @@ public class FormularioCrud extends javax.swing.JFrame {
                     .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_edit)
                     .addComponent(txt_delete))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         table_students.setModel(new javax.swing.table.DefaultTableModel(
@@ -212,11 +229,22 @@ public class FormularioCrud extends javax.swing.JFrame {
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         // TODO add your handling code here:
+        objetoCConexion.guardar();
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_editActionPerformed
+
+    private void btn_save1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_save1ActionPerformed
+        // TODO add your handling code here:
+       Object [][] array = objetoCConexion.imprimir();
+               String[] titulos = {"id", "nombre", "apellido", "numCuenta", "carrera", "correo"};
+
+        DefaultTableModel dt = new DefaultTableModel(array, titulos);
+
+        this.table_students.setModel(dt);
+    }//GEN-LAST:event_btn_save1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,6 +284,7 @@ public class FormularioCrud extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_save;
+    private javax.swing.JButton btn_save1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
