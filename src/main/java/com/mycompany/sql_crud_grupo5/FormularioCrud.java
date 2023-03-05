@@ -4,24 +4,23 @@
  */
 package com.mycompany.sql_crud_grupo5;
 
-import java.sql.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author PC
+ * @author Grupo5
  */
 public class FormularioCrud extends javax.swing.JFrame {
-
-    CConexion objetoCConexion = new CConexion();
     /**
      * Creates new form FormularioCrud
      */
     public FormularioCrud() {
         initComponents();
-
-        CConexion objetoCConexion = new CConexion();
-        objetoCConexion.establecerConexion();
+        setLocationRelativeTo(null);
+        CConexion objC=new CConexion();
+        objC.establecerConexion();
+        Estudiantes objEst=new Estudiantes();        
+        objEst.mostrarEstudiantes(this.table_students);
     }
 
     /**
@@ -48,9 +47,11 @@ public class FormularioCrud extends javax.swing.JFrame {
         txt_email = new javax.swing.JTextField();
         btn_save = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
-        txt_delete = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        btn_save1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txt_ID = new javax.swing.JTextField();
+        btn_new = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_students = new javax.swing.JTable();
 
@@ -68,6 +69,9 @@ public class FormularioCrud extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        jPanel1.setEnabled(false);
 
         jLabel1.setText("Nombre");
 
@@ -79,8 +83,19 @@ public class FormularioCrud extends javax.swing.JFrame {
 
         jLabel5.setText("Correo");
 
+        txt_name.setEnabled(false);
+
+        txt_lastName.setEnabled(false);
+
+        txt_numCuenta.setEnabled(false);
+
+        txt_career.setEnabled(false);
+
+        txt_email.setEnabled(false);
+
         btn_save.setBackground(new java.awt.Color(153, 204, 0));
         btn_save.setText("Guardar");
+        btn_save.setEnabled(false);
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_saveActionPerformed(evt);
@@ -89,23 +104,34 @@ public class FormularioCrud extends javax.swing.JFrame {
 
         btn_edit.setBackground(new java.awt.Color(255, 204, 51));
         btn_edit.setText("Editar");
+        btn_edit.setEnabled(false);
         btn_edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_editActionPerformed(evt);
             }
         });
 
-        txt_delete.setBackground(new java.awt.Color(255, 51, 51));
-        txt_delete.setText("Eliminar");
+        btn_delete.setBackground(new java.awt.Color(255, 51, 51));
+        btn_delete.setText("Eliminar");
+        btn_delete.setEnabled(false);
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setText("Datos Estudiantes");
 
-        btn_save1.setBackground(new java.awt.Color(153, 204, 0));
-        btn_save1.setText("Imprimir");
-        btn_save1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setText("ID");
+
+        txt_ID.setEnabled(false);
+
+        btn_new.setBackground(new java.awt.Color(204, 255, 255));
+        btn_new.setText("Nuevo");
+        btn_new.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_save1ActionPerformed(evt);
+                btn_newActionPerformed(evt);
             }
         });
 
@@ -114,52 +140,62 @@ public class FormularioCrud extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(28, 28, 28))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txt_career, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                    .addComponent(txt_numCuenta, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_lastName, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))
+                        .addGap(23, 23, 23)
+                        .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn_edit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_delete))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txt_career)
+                                            .addComponent(txt_numCuenta, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_lastName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(35, 35, 35)
                                 .addComponent(txt_email))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn_edit)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_delete)))
+                                .addComponent(txt_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(80, 80, 80)
+                .addComponent(btn_new)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -181,13 +217,13 @@ public class FormularioCrud extends javax.swing.JFrame {
                     .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_edit)
-                    .addComponent(txt_delete))
-                .addContainerGap(65, Short.MAX_VALUE))
+                    .addComponent(btn_delete))
+                .addGap(18, 18, 18)
+                .addComponent(btn_new)
+                .addGap(28, 28, 28))
         );
 
         table_students.setModel(new javax.swing.table.DefaultTableModel(
@@ -201,6 +237,11 @@ public class FormularioCrud extends javax.swing.JFrame {
 
             }
         ));
+        table_students.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                table_studentsMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(table_students);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,24 +268,63 @@ public class FormularioCrud extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void table_studentsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_studentsMousePressed
+        Estudiantes objEst=new Estudiantes();
+        objEst.seleccionarEstudiante(this.table_students,this.txt_ID,this.txt_name,this.txt_lastName,
+                                        this.txt_numCuenta,this.txt_career,this.txt_email);
+        
+        this.enableBtns();
+        this.btn_save.setEnabled(false);
+        this.enableTxtFlds(true);
+        this.txt_ID.setEnabled(false);
+    }//GEN-LAST:event_table_studentsMousePressed
+
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        // TODO add your handling code here:
-        objetoCConexion.guardar();
+        if(this.txt_ID.getText().length()==0 || this.txt_name.getText().length()==0 || this.txt_lastName.getText().length()==0 ||
+                this.txt_numCuenta.getText().length()==0 || this.txt_career.getText().length()==0 || this.txt_email.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Por favor llenar todos los campos!!");            
+        }
+        else{            
+            Estudiantes objEst=new Estudiantes();
+            objEst.guardarEstudiantes(this.txt_ID,this.txt_name,this.txt_lastName,
+                                            this.txt_numCuenta,this.txt_career,this.txt_email);
+            objEst.mostrarEstudiantes(this.table_students);
+            this.limpiarTexto();
+            this.enableTxtFlds(false);
+            this.btn_save.setEnabled(false);
+        }
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        // TODO add your handling code here:
+        Estudiantes objEst=new Estudiantes();
+        objEst.modificarEstudiante(this.txt_ID,this.txt_name,this.txt_lastName,
+                                        this.txt_numCuenta,this.txt_career,this.txt_email);
+        objEst.mostrarEstudiantes(this.table_students);
+        this.btn_save.setEnabled(false);
+        this.btn_delete.setEnabled(false);
+        this.btn_edit.setEnabled(false);
+        this.enableTxtFlds(false);
+        this.limpiarTexto();
     }//GEN-LAST:event_btn_editActionPerformed
 
-    private void btn_save1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_save1ActionPerformed
-        // TODO add your handling code here:
-       Object [][] array = objetoCConexion.imprimir();
-               String[] titulos = {"id", "nombre", "apellido", "numCuenta", "carrera", "correo"};
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        Estudiantes objEst=new Estudiantes();
+        objEst.eliminarEstudiante(this.txt_ID);
+        objEst.mostrarEstudiantes(table_students);
+        this.btn_save.setEnabled(false);
+        this.btn_delete.setEnabled(false);
+        this.btn_edit.setEnabled(false);
+        this.enableTxtFlds(false);
+        this.limpiarTexto();
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
-        DefaultTableModel dt = new DefaultTableModel(array, titulos);
-
-        this.table_students.setModel(dt);
-    }//GEN-LAST:event_btn_save1ActionPerformed
+    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
+        this.btn_save.setEnabled(true);
+        this.enableTxtFlds(true);
+        this.btn_delete.setEnabled(false);
+        this.btn_edit.setEnabled(false);
+        this.limpiarTexto();
+    }//GEN-LAST:event_btn_newActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,24 +360,60 @@ public class FormularioCrud extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    /**
+     * Metodo que limpia los campos de tipo JTextField.
+     */
+    public void limpiarTexto(){
+        this.txt_ID.setText("");
+        this.txt_name.setText("");
+        this.txt_lastName.setText("");
+        this.txt_numCuenta.setText("");
+        this.txt_career.setText("");
+        this.txt_email.setText("");
+    }
+    
+    /**
+     * Metodo que habilita los componentes de tipo boton "Editar" y "Eliminar".
+     */
+    public void enableBtns(){
+        this.btn_delete.setEnabled(true);
+        this.btn_edit.setEnabled(true);
+    }
+    
+    /**
+     * Metodo que asigna el estado de los campos de tipo JTextField.
+     * Que puede ser: true o false
+     * @param flag : boolean
+     */
+    public void enableTxtFlds(boolean flag){
+        this.txt_ID.setEnabled(flag);
+        this.txt_name.setEnabled(flag);
+        this.txt_lastName.setEnabled(flag);
+        this.txt_numCuenta.setEnabled(flag);
+        this.txt_career.setEnabled(flag);
+        this.txt_email.setEnabled(flag);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_save;
-    private javax.swing.JButton btn_save1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable table_students;
+    private javax.swing.JTextField txt_ID;
     private javax.swing.JTextField txt_career;
-    private javax.swing.JButton txt_delete;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_lastName;
     private javax.swing.JTextField txt_name;
