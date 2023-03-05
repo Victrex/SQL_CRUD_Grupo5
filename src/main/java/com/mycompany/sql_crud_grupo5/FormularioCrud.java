@@ -11,16 +11,29 @@ import javax.swing.JOptionPane;
  * @author Grupo5
  */
 public class FormularioCrud extends javax.swing.JFrame {
+
+    public String seleccion;
+
     /**
      * Creates new form FormularioCrud
      */
     public FormularioCrud() {
         initComponents();
         setLocationRelativeTo(null);
-        CConexion objC=new CConexion();
+        CConexion objC = new CConexion();
         objC.establecerConexion();
-        Estudiantes objEst=new Estudiantes();        
-        objEst.mostrarEstudiantes(this.table_students);
+        Estudiantes objEst = new Estudiantes();
+        this.seleccion = objEst.seleccionarTabla();
+        System.out.println("tabla seleccionada: " + this.seleccion);
+        objEst.mostrarEstudiantes(this.table_students, this.jLabel7, seleccion);
+    }
+
+    public void set_Seleccion(String seleccion) {
+        this.seleccion = seleccion;
+    }
+
+    public String get_Seleccion() {
+        return seleccion;
     }
 
     /**
@@ -40,6 +53,9 @@ public class FormularioCrud extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txt_ID = new javax.swing.JTextField();
         txt_name = new javax.swing.JTextField();
         txt_lastName = new javax.swing.JTextField();
         txt_numCuenta = new javax.swing.JTextField();
@@ -48,12 +64,11 @@ public class FormularioCrud extends javax.swing.JFrame {
         btn_save = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txt_ID = new javax.swing.JTextField();
         btn_new = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_students = new javax.swing.JTable();
+        btn_cambiar = new javax.swing.JButton();
+        btn_nuevaTabla = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,15 +88,22 @@ public class FormularioCrud extends javax.swing.JFrame {
 
         jPanel1.setEnabled(false);
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("ID");
 
-        jLabel2.setText("Apellido");
+        jLabel2.setText("Nombre");
 
-        jLabel3.setText("NumCuenta");
+        jLabel3.setText("Apellido");
 
-        jLabel4.setText("Carrera");
+        jLabel4.setText("NumCuenta");
 
-        jLabel5.setText("Correo");
+        jLabel5.setText("Carrera");
+
+        jLabel6.setText("Correo");
+
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel7.setText("Datos Estudiantes");
+
+        txt_ID.setEnabled(false);
 
         txt_name.setEnabled(false);
 
@@ -120,13 +142,6 @@ public class FormularioCrud extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel6.setText("Datos Estudiantes");
-
-        jLabel7.setText("ID");
-
-        txt_ID.setEnabled(false);
-
         btn_new.setBackground(new java.awt.Color(204, 255, 255));
         btn_new.setText("Nuevo");
         btn_new.addActionListener(new java.awt.event.ActionListener() {
@@ -139,10 +154,6 @@ public class FormularioCrud extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(28, 28, 28))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,10 +169,10 @@ public class FormularioCrud extends javax.swing.JFrame {
                                 .addComponent(btn_delete))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -173,16 +184,18 @@ public class FormularioCrud extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)
                                 .addGap(35, 35, 35)
                                 .addComponent(txt_email))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txt_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(93, 93, 93)
                 .addComponent(btn_new)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -190,30 +203,30 @@ public class FormularioCrud extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(jLabel1)
                     .addComponent(txt_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
                     .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
                     .addComponent(txt_lastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
                     .addComponent(txt_numCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
                     .addComponent(txt_career, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
                     .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,35 +257,61 @@ public class FormularioCrud extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(table_students);
 
+        btn_cambiar.setBackground(new java.awt.Color(255, 255, 255));
+        btn_cambiar.setText("Cambiar tabla");
+        btn_cambiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cambiarActionPerformed(evt);
+            }
+        });
+
+        btn_nuevaTabla.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nuevaTabla.setText("Nueva tabla");
+        btn_nuevaTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevaTablaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_nuevaTabla)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_cambiar)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(48, 48, 48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cambiar)
+                    .addComponent(btn_nuevaTabla))
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void table_studentsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_studentsMousePressed
-        Estudiantes objEst=new Estudiantes();
-        objEst.seleccionarEstudiante(this.table_students,this.txt_ID,this.txt_name,this.txt_lastName,
-                                        this.txt_numCuenta,this.txt_career,this.txt_email);
-        
+        Estudiantes objEst = new Estudiantes();
+        objEst.seleccionarEstudiante(this.table_students, this.txt_ID, this.txt_name, this.txt_lastName,
+                this.txt_numCuenta, this.txt_career, this.txt_email);
+
         this.enableBtns();
         this.btn_save.setEnabled(false);
         this.enableTxtFlds(true);
@@ -280,15 +319,14 @@ public class FormularioCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_table_studentsMousePressed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        if(this.txt_ID.getText().length()==0 || this.txt_name.getText().length()==0 || this.txt_lastName.getText().length()==0 ||
-                this.txt_numCuenta.getText().length()==0 || this.txt_career.getText().length()==0 || this.txt_email.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"Por favor llenar todos los campos!!");            
-        }
-        else{            
-            Estudiantes objEst=new Estudiantes();
-            objEst.guardarEstudiantes(this.txt_ID,this.txt_name,this.txt_lastName,
-                                            this.txt_numCuenta,this.txt_career,this.txt_email);
-            objEst.mostrarEstudiantes(this.table_students);
+        if (this.txt_ID.getText().length() == 0 || this.txt_name.getText().length() == 0 || this.txt_lastName.getText().length() == 0
+                || this.txt_numCuenta.getText().length() == 0 || this.txt_career.getText().length() == 0 || this.txt_email.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Por favor llenar todos los campos!!");
+        } else {
+            Estudiantes objEst = new Estudiantes();
+            objEst.guardarEstudiantes(this.txt_ID, this.txt_name, this.txt_lastName,
+                    this.txt_numCuenta, this.txt_career, this.txt_email);
+            objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
             this.limpiarTexto();
             this.enableTxtFlds(false);
             this.btn_save.setEnabled(false);
@@ -296,10 +334,10 @@ public class FormularioCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        Estudiantes objEst=new Estudiantes();
-        objEst.modificarEstudiante(this.txt_ID,this.txt_name,this.txt_lastName,
-                                        this.txt_numCuenta,this.txt_career,this.txt_email);
-        objEst.mostrarEstudiantes(this.table_students);
+        Estudiantes objEst = new Estudiantes();
+        objEst.modificarEstudiante(this.txt_ID, this.txt_name, this.txt_lastName,
+                this.txt_numCuenta, this.txt_career, this.txt_email);
+        objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
         this.btn_save.setEnabled(false);
         this.btn_delete.setEnabled(false);
         this.btn_edit.setEnabled(false);
@@ -308,9 +346,9 @@ public class FormularioCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        Estudiantes objEst=new Estudiantes();
+        Estudiantes objEst = new Estudiantes();
         objEst.eliminarEstudiante(this.txt_ID);
-        objEst.mostrarEstudiantes(table_students);
+        objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
         this.btn_save.setEnabled(false);
         this.btn_delete.setEnabled(false);
         this.btn_edit.setEnabled(false);
@@ -325,6 +363,24 @@ public class FormularioCrud extends javax.swing.JFrame {
         this.btn_edit.setEnabled(false);
         this.limpiarTexto();
     }//GEN-LAST:event_btn_newActionPerformed
+
+    private void btn_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarActionPerformed
+        // TODO add your handling code here:
+        Estudiantes objEst = new Estudiantes();
+        String seleccion = objEst.seleccionarTabla();
+        if (seleccion != null) {
+            set_Seleccion(seleccion);
+            System.out.println("tabla seleccionada: " + get_Seleccion());
+            objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_cambiarActionPerformed
+
+    private void btn_nuevaTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevaTablaActionPerformed
+        Estudiantes objEst = new Estudiantes();
+        objEst.crearTabla();
+    }//GEN-LAST:event_btn_nuevaTablaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,11 +416,11 @@ public class FormularioCrud extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * Metodo que limpia los campos de tipo JTextField.
      */
-    public void limpiarTexto(){
+    public void limpiarTexto() {
         this.txt_ID.setText("");
         this.txt_name.setText("");
         this.txt_lastName.setText("");
@@ -372,21 +428,22 @@ public class FormularioCrud extends javax.swing.JFrame {
         this.txt_career.setText("");
         this.txt_email.setText("");
     }
-    
+
     /**
      * Metodo que habilita los componentes de tipo boton "Editar" y "Eliminar".
      */
-    public void enableBtns(){
+    public void enableBtns() {
         this.btn_delete.setEnabled(true);
         this.btn_edit.setEnabled(true);
     }
-    
+
     /**
-     * Metodo que asigna el estado de los campos de tipo JTextField.
-     * Que puede ser: true o false
+     * Metodo que asigna el estado de los campos de tipo JTextField. Que puede
+     * ser: true o false
+     *
      * @param flag : boolean
      */
-    public void enableTxtFlds(boolean flag){
+    public void enableTxtFlds(boolean flag) {
         this.txt_ID.setEnabled(flag);
         this.txt_name.setEnabled(flag);
         this.txt_lastName.setEnabled(flag);
@@ -394,11 +451,13 @@ public class FormularioCrud extends javax.swing.JFrame {
         this.txt_career.setEnabled(flag);
         this.txt_email.setEnabled(flag);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cambiar;
     private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_new;
+    private javax.swing.JButton btn_nuevaTabla;
     private javax.swing.JButton btn_save;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
