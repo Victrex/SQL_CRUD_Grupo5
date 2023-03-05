@@ -8,3 +8,4 @@
 - Cambiar a 'Enabled' el TCP/IP del 'Protocols for MSSQLSERVER' en el programa 'Sql Server Configuration Manager'
 - Ademas de eso, debemos asegurarnos que:
   - Cuando abrimos las propiedades del TCP/IP todo este en 'yes' y en la pestaña de IP ADRESSESS en el ultimo apartado 'IPALL' el TCP PORT tenga de valor '1433'
+- [ARCHIVO EJECUTABLE .jar](target/SQL_CRUD_Grupo5-1.0-SNAPSHOT-jar-with-dependencies.jar)
