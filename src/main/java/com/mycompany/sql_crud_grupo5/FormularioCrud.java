@@ -22,16 +22,16 @@ public class FormularioCrud extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         CConexion objC = new CConexion();
         objC.establecerConexion();
-        Estudiantes objEst = new Estudiantes();
+        Tablas objEst = new Tablas();
         this.seleccion = objEst.seleccionarTabla(true);
         System.out.println("tabla seleccionada: " + this.seleccion);
-        objEst.mostrarEstudiantes(this.table_students, this.jLabel7, seleccion);
+        objEst.mostrarValoresEnTabla(this.table_students, this.jLabel7, seleccion);
     }
 
+    //GETS Y SETS
     public void set_Seleccion(String seleccion) {
         this.seleccion = seleccion;
     }
-
     public String get_Seleccion() {
         return seleccion;
     }
@@ -306,8 +306,8 @@ public class FormularioCrud extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void table_studentsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_studentsMousePressed
-        Estudiantes objEst = new Estudiantes();
-        objEst.seleccionarEstudiante(this.table_students, this.txt_ID, this.txt_name, this.txt_lastName,
+        Tablas objEst = new Tablas();
+        objEst.seleccionarValoresDeTabla(this.table_students, this.txt_ID, this.txt_name, this.txt_lastName,
                 this.txt_numCuenta, this.txt_career, this.txt_email);
 
         this.enableBtns();
@@ -321,10 +321,10 @@ public class FormularioCrud extends javax.swing.JFrame {
                 || this.txt_numCuenta.getText().length() == 0 || this.txt_career.getText().length() == 0 || this.txt_email.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Por favor llenar todos los campos!!");
         } else {
-            Estudiantes objEst = new Estudiantes();
-            objEst.guardarEstudiantes(this.txt_ID, this.txt_name, this.txt_lastName,
+            Tablas objEst = new Tablas();
+            objEst.guardarValoresEnTabla(this.txt_ID, this.txt_name, this.txt_lastName,
                     this.txt_numCuenta, this.txt_career, this.txt_email, get_Seleccion());
-            objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
+            objEst.mostrarValoresEnTabla(this.table_students, this.jLabel7, get_Seleccion());
             this.limpiarTexto();
             this.enableTxtFlds(false);
             this.btn_save.setEnabled(false);
@@ -332,10 +332,10 @@ public class FormularioCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        Estudiantes objEst = new Estudiantes();
-        objEst.modificarEstudiante(this.txt_ID, this.txt_name, this.txt_lastName,
+        Tablas objEst = new Tablas();
+        objEst.modificarValoresDeTabla(this.txt_ID, this.txt_name, this.txt_lastName,
                 this.txt_numCuenta, this.txt_career, this.txt_email, get_Seleccion());
-        objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
+        objEst.mostrarValoresEnTabla(this.table_students, this.jLabel7, get_Seleccion());
         this.btn_save.setEnabled(false);
         this.btn_delete.setEnabled(false);
         this.btn_edit.setEnabled(false);
@@ -344,9 +344,9 @@ public class FormularioCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        Estudiantes objEst = new Estudiantes();
-        objEst.eliminarEstudiante(this.txt_ID, get_Seleccion());
-        objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
+        Tablas objEst = new Tablas();
+        objEst.eliminarRegistro(this.txt_ID, get_Seleccion());
+        objEst.mostrarValoresEnTabla(this.table_students, this.jLabel7, get_Seleccion());
         this.btn_save.setEnabled(false);
         this.btn_delete.setEnabled(false);
         this.btn_edit.setEnabled(false);
@@ -363,20 +363,19 @@ public class FormularioCrud extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_newActionPerformed
 
     private void btn_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarActionPerformed
-        // TODO add your handling code here:
-        Estudiantes objEst = new Estudiantes();
+        Tablas objEst = new Tablas();
         String seleccion = objEst.seleccionarTabla(false);
         if (seleccion != null) {
             set_Seleccion(seleccion);
             System.out.println("tabla seleccionada: " + get_Seleccion());
-            objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
+            objEst.mostrarValoresEnTabla(this.table_students, this.jLabel7, get_Seleccion());
         } else {
 
         }
     }//GEN-LAST:event_btn_cambiarActionPerformed
 
     private void btn_nuevaTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevaTablaActionPerformed
-        Estudiantes objEst = new Estudiantes();
+        Tablas objEst = new Tablas();
         objEst.crearTabla();
     }//GEN-LAST:event_btn_nuevaTablaActionPerformed
 

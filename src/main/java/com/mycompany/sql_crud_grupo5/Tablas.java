@@ -14,8 +14,11 @@ import java.util.List;
  *
  * @author Grupo5
  */
-public class Estudiantes {
+public class Tablas {
 
+    /**
+     * Metodo para crear tablas en la base de datos.
+     */
     public void crearTabla() {
         CConexion objC = new CConexion();
         String name = JOptionPane.showInputDialog("Ingrese el nombre de la nueva tabla");
@@ -30,6 +33,11 @@ public class Estudiantes {
         }
     }
 
+    /**
+     * Metodo para seleccionar la tabla que queremos usar en la base de datos.
+     * @param flag : boolean
+     * @return 
+     */
     public String seleccionarTabla(boolean flag) {
         CConexion objC = new CConexion();
         ArrayList<String> tables = new ArrayList<String>();
@@ -43,7 +51,6 @@ public class Estudiantes {
                 if (!tableName.contains("trace")) {
                     tables.add(tableName);
                 }
-
             }
             Object[] elementos = tables.toArray();
             String elementoSeleccionado = (String) JOptionPane.showInputDialog(null, "Seleccione una tabla:", "Lista de elementos", JOptionPane.PLAIN_MESSAGE, null, elementos, elementos[0]);
@@ -67,9 +74,9 @@ public class Estudiantes {
      * Metodo para mostrar los valores de cada registro en la tabla cuando se
      * inicia el programa, si es que existen.
      *
-     * @param tblEstudiantes : JTable
+     * @param tbl : JTable
      */
-    public void mostrarEstudiantes(JTable tblEstudiantes, JLabel jLabel7, String seleccion) {
+    public void mostrarValoresEnTabla(JTable tbl, JLabel jLabel7, String seleccion) {
         List<JTextField> textFields = new ArrayList<JTextField>();
         CConexion objC = new CConexion();
         DefaultTableModel modelo = new DefaultTableModel();
@@ -94,7 +101,7 @@ public class Estudiantes {
                 }
                 modelo.addRow(datos);
             }
-            tblEstudiantes.setModel(modelo);
+            tbl.setModel(modelo);
             jLabel7.setText("Tabla "+seleccion);
 
         } catch (Exception e) {
@@ -106,7 +113,7 @@ public class Estudiantes {
      * Metodo que sirve para llenar los campos de tipo JTextField con sus
      * respectivos valores en la tabla.
      *
-     * @param tblEstudiante : JTable
+     * @param tbl : JTable
      * @param id : JTextField
      * @param nombre : JTextField
      * @param apellido : JTextField
@@ -114,17 +121,17 @@ public class Estudiantes {
      * @param carrera : JTextField
      * @param correo : JTextField
      */
-    public void seleccionarEstudiante(JTable tblEstudiante, JTextField id, JTextField nombre, JTextField apellido,
+    public void seleccionarValoresDeTabla(JTable tbl, JTextField id, JTextField nombre, JTextField apellido,
             JTextField numC, JTextField carrera, JTextField correo) {
         try {
-            int filaSelec = tblEstudiante.getSelectedRow();
+            int filaSelec = tbl.getSelectedRow();
             if (filaSelec >= 0) {
-                id.setText(tblEstudiante.getValueAt(filaSelec, 0).toString());
-                nombre.setText(tblEstudiante.getValueAt(filaSelec, 1).toString());
-                apellido.setText(tblEstudiante.getValueAt(filaSelec, 2).toString());
-                numC.setText(tblEstudiante.getValueAt(filaSelec, 3).toString());
-                carrera.setText(tblEstudiante.getValueAt(filaSelec, 4).toString());
-                correo.setText(tblEstudiante.getValueAt(filaSelec, 5).toString());
+                id.setText(tbl.getValueAt(filaSelec, 0).toString());
+                nombre.setText(tbl.getValueAt(filaSelec, 1).toString());
+                apellido.setText(tbl.getValueAt(filaSelec, 2).toString());
+                numC.setText(tbl.getValueAt(filaSelec, 3).toString());
+                carrera.setText(tbl.getValueAt(filaSelec, 4).toString());
+                correo.setText(tbl.getValueAt(filaSelec, 5).toString());
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccionar un registro!!");
             }
@@ -143,7 +150,7 @@ public class Estudiantes {
      * @param carrera : JTextField
      * @param correo : JTextField
      */
-    public void guardarEstudiantes(JTextField id, JTextField nombre, JTextField apellido,
+    public void guardarValoresEnTabla(JTextField id, JTextField nombre, JTextField apellido,
             JTextField numC, JTextField carrera, JTextField correo, String seleccion) {
         CConexion objC = new CConexion();
         String sql = "INSERT INTO "+ seleccion +" (id,nombre,apellido,numCuenta,carrera,correo) VALUES(?,?,?,?,?,?);";
@@ -175,7 +182,7 @@ public class Estudiantes {
      * @param carrera : JTextField
      * @param correo : JTextField
      */
-    public void modificarEstudiante(JTextField id, JTextField nombre, JTextField apellido,
+    public void modificarValoresDeTabla(JTextField id, JTextField nombre, JTextField apellido,
             JTextField numC, JTextField carrera, JTextField correo, String seleccion) {
         CConexion objC = new CConexion();
         String sql = "UPDATE "+ seleccion +" SET "+seleccion+".id=" + id.getText() + ","+seleccion+".nombre=?,"+seleccion+".apellido=?,"
@@ -202,7 +209,7 @@ public class Estudiantes {
      *
      * @param id : JTextField
      */
-    public void eliminarEstudiante(JTextField id, String seleccion) {
+    public void eliminarRegistro(JTextField id, String seleccion) {
         CConexion objC = new CConexion();
         String sql = "DELETE FROM "+ seleccion +" WHERE "+ seleccion +".id=?";
 

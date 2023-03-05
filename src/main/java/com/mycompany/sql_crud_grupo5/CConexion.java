@@ -70,7 +70,6 @@ public class CConexion {
 
         return conn;
     }
-
     public Connection conexion() {
         Connection conn = null;
         try {
