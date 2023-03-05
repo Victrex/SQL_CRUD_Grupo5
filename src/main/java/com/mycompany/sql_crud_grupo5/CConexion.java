@@ -13,14 +13,16 @@ import javax.swing.JOptionPane;
  * @author Grupo5
  */
 public class CConexion {
+
     String username = "root";
-    String bd = "estudianteDB";
+    String bd = "grupo5DB";
     String password = "";
-    String url = "jdbc:sqlserver://localhost:1433;databaseName=estudianteDB;encrypt=true;trustServerCertificate=true";
-    
+    String url = "jdbc:sqlserver://localhost:1433;databaseName=grupo5DB;encrypt=true;trustServerCertificate=true";
+
     /**
-     * Metodo que crea la conexion con la base de datos.
-     * Si la base de datos o la tabla respectiva no ha sido creada, se crearan automaticamente.
+     * Metodo que crea la conexion con la base de datos. Si la base de datos o
+     * la tabla respectiva no ha sido creada, se crearan automaticamente.
+     *
      * @return conn : Connection
      */
     public Connection establecerConexion() {
@@ -34,15 +36,28 @@ public class CConexion {
             Statement stmt = conn.createStatement();
 
             DatabaseMetaData meta = conn.getMetaData();
-            ResultSet rs = meta.getTables(null, null, "estudiantes", null);
+            //ResultSet rs = meta.getTables(null, null, "estudiantes", null);
+            ResultSet rs = meta.getTables("grupo5DB", null, "%", new String[]{"TABLE"});
 
-            if (!rs.next()) {
+            if (rs.next()) {
+                String tableName = rs.getString("TABLE_NAME");
+                if (tableName.contains("trace")) {
+                    String nombreTabla = JOptionPane.showInputDialog("No hay tablas existentes \n Ingrese el nombre de una nueva tabla");
+                    if (nombreTabla != null) {
+                        String sql = "CREATE TABLE " + nombreTabla + " (id INT PRIMARY KEY, nombre VARCHAR(50), apellido VARCHAR(50), numCuenta VARCHAR(11), carrera VARCHAR(100), correo VARCHAR(100))";
+                        stmt.executeUpdate(sql);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No hay tablas disponibles a las que se pueda acceder");
+                        System.exit(0);
+                    }
+                }
+            } else if (!rs.next()) {
                 String nombreTabla = JOptionPane.showInputDialog("No hay tablas existentes \n Ingrese el nombre de una nueva tabla");
-                if(nombreTabla != null){
-                    String sql = "CREATE TABLE "+nombreTabla+" (id INT PRIMARY KEY, nombre VARCHAR(50), apellido VARCHAR(50), numCuenta VARCHAR(11), carrera VARCHAR(100), correo VARCHAR(100))";
-                stmt.executeUpdate(sql);
-                }else{
-                    JOptionPane.showMessageDialog(null,"No hay tablas disponibles a las que se pueda acceder");
+                if (nombreTabla != null) {
+                    String sql = "CREATE TABLE " + nombreTabla + " (id INT PRIMARY KEY, nombre VARCHAR(50), apellido VARCHAR(50), numCuenta VARCHAR(11), carrera VARCHAR(100), correo VARCHAR(100))";
+                    stmt.executeUpdate(sql);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay tablas disponibles a las que se pueda acceder");
                     System.exit(0);
                 }
             }
@@ -54,15 +69,15 @@ public class CConexion {
         }
 
         return conn;
-    }    
+    }
     public Connection conexion() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
-        
+
         return conn;
     }
 
@@ -71,7 +86,7 @@ public class CConexion {
      */
     public void checkDB() {
 
-        String databaseName = "estudianteDB";
+        String databaseName = "grupo5DB";
         String connectionUrl = "jdbc:sqlserver://localhost:1433;user=root;password=;encrypt=true;trustServerCertificate=true";
 
         try ( Connection connection = DriverManager.getConnection(connectionUrl);  Statement statement = connection.createStatement()) {
