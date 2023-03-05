@@ -101,7 +101,7 @@ public class FormularioCrud extends javax.swing.JFrame {
         jLabel6.setText("Correo");
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel7.setText("Datos Estudiantes");
+        jLabel7.setText("Tabla Null");
 
         txt_ID.setEnabled(false);
 
@@ -114,8 +114,6 @@ public class FormularioCrud extends javax.swing.JFrame {
         txt_career.setEnabled(false);
 
         txt_email.setEnabled(false);
-
-        txt_name.setEnabled(false);
 
         btn_save.setBackground(new java.awt.Color(153, 204, 0));
         btn_save.setText("Guardar");
@@ -259,7 +257,6 @@ public class FormularioCrud extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(table_students);
 
-        btn_cambiar.setBackground(new java.awt.Color(255, 255, 255));
         btn_cambiar.setText("Cambiar tabla");
         btn_cambiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +264,6 @@ public class FormularioCrud extends javax.swing.JFrame {
             }
         });
 
-        btn_nuevaTabla.setBackground(new java.awt.Color(255, 255, 255));
         btn_nuevaTabla.setText("Nueva tabla");
         btn_nuevaTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,7 +345,7 @@ public class FormularioCrud extends javax.swing.JFrame {
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         Estudiantes objEst = new Estudiantes();
-        objEst.eliminarEstudiante(this.txt_ID);
+        objEst.eliminarEstudiante(this.txt_ID, get_Seleccion());
         objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
         this.btn_save.setEnabled(false);
         this.btn_delete.setEnabled(false);

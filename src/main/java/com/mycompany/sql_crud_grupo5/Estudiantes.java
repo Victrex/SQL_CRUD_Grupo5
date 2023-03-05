@@ -37,7 +37,7 @@ public class Estudiantes {
             Connection conn = null;
             conn = objC.conexion();
             DatabaseMetaData md = conn.getMetaData();
-            ResultSet rs = md.getTables("estudianteDB", null, "%", new String[]{"TABLE"});
+            ResultSet rs = md.getTables("grupo5DB", null, "%", new String[]{"TABLE"});
             while (rs.next()) {
                 String tableName = rs.getString("TABLE_NAME");
                 if (!tableName.contains("trace")) {
@@ -202,9 +202,9 @@ public class Estudiantes {
      *
      * @param id : JTextField
      */
-    public void eliminarEstudiante(JTextField id) {
+    public void eliminarEstudiante(JTextField id, String seleccion) {
         CConexion objC = new CConexion();
-        String sql = "DELETE FROM estudiantes WHERE estudiantes.id=?";
+        String sql = "DELETE FROM "+ seleccion +" WHERE "+ seleccion +".id=?";
 
         try {
             CallableStatement callSt = objC.conexion().prepareCall(sql);
