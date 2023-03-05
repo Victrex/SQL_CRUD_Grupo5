@@ -37,13 +37,20 @@ public class CConexion {
             ResultSet rs = meta.getTables(null, null, "estudiantes", null);
 
             if (!rs.next()) {
-                String sql = "CREATE TABLE estudiantes (id INT PRIMARY KEY, nombre VARCHAR(50), apellido VARCHAR(50), numCuenta VARCHAR(11), carrera VARCHAR(100), correo VARCHAR(100))";
+                String nombreTabla = JOptionPane.showInputDialog("No hay tablas existentes \n Ingrese el nombre de una nueva tabla");
+                if(nombreTabla != null){
+                    String sql = "CREATE TABLE "+nombreTabla+" (id INT PRIMARY KEY, nombre VARCHAR(50), apellido VARCHAR(50), numCuenta VARCHAR(11), carrera VARCHAR(100), correo VARCHAR(100))";
                 stmt.executeUpdate(sql);
+                }else{
+                    JOptionPane.showMessageDialog(null,"No hay tablas disponibles a las que se pueda acceder");
+                    System.exit(0);
+                }
             }
             JOptionPane.showMessageDialog(null, "Conexion exitosa a la BD");
         } catch (HeadlessException | ClassNotFoundException | SQLException se) {
             se.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se conecto a la base de datos");
+            System.exit(1);
         }
 
         return conn;

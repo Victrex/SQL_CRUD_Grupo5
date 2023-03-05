@@ -23,7 +23,7 @@ public class FormularioCrud extends javax.swing.JFrame {
         CConexion objC = new CConexion();
         objC.establecerConexion();
         Estudiantes objEst = new Estudiantes();
-        this.seleccion = objEst.seleccionarTabla();
+        this.seleccion = objEst.seleccionarTabla(true);
         System.out.println("tabla seleccionada: " + this.seleccion);
         objEst.mostrarEstudiantes(this.table_students, this.jLabel7, seleccion);
     }
@@ -327,7 +327,7 @@ public class FormularioCrud extends javax.swing.JFrame {
         } else {
             Estudiantes objEst = new Estudiantes();
             objEst.guardarEstudiantes(this.txt_ID, this.txt_name, this.txt_lastName,
-                    this.txt_numCuenta, this.txt_career, this.txt_email);
+                    this.txt_numCuenta, this.txt_career, this.txt_email, get_Seleccion());
             objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
             this.limpiarTexto();
             this.enableTxtFlds(false);
@@ -338,7 +338,7 @@ public class FormularioCrud extends javax.swing.JFrame {
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         Estudiantes objEst = new Estudiantes();
         objEst.modificarEstudiante(this.txt_ID, this.txt_name, this.txt_lastName,
-                this.txt_numCuenta, this.txt_career, this.txt_email);
+                this.txt_numCuenta, this.txt_career, this.txt_email, get_Seleccion());
         objEst.mostrarEstudiantes(this.table_students, this.jLabel7, get_Seleccion());
         this.btn_save.setEnabled(false);
         this.btn_delete.setEnabled(false);
@@ -369,7 +369,7 @@ public class FormularioCrud extends javax.swing.JFrame {
     private void btn_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarActionPerformed
         // TODO add your handling code here:
         Estudiantes objEst = new Estudiantes();
-        String seleccion = objEst.seleccionarTabla();
+        String seleccion = objEst.seleccionarTabla(false);
         if (seleccion != null) {
             set_Seleccion(seleccion);
             System.out.println("tabla seleccionada: " + get_Seleccion());
@@ -388,30 +388,8 @@ public class FormularioCrud extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioCrud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioCrud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioCrud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioCrud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Crea y muestra el Formulario */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FormularioCrud().setVisible(true);

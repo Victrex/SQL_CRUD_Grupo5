@@ -28,25 +28,12 @@ public class Estudiantes {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
-
     }
 
-    public String seleccionarTabla() {
+    public String seleccionarTabla(boolean flag) {
         CConexion objC = new CConexion();
         ArrayList<String> tables = new ArrayList<String>();
-//        String sql = "";
-//        sql = "SHOW TABLES;";
-//        Statement st;
         try {
-//            st = objC.conexion().createStatement();
-//            ResultSet rs = st.executeQuery(sql);
-//            String datos[] = new String[20];
-//            while (rs.next()) {
-//                for (int i = 0; i <= datos.length - 1; i++) {
-//                    datos[i] = rs.getString(i + 1);
-//                    System.out.println(datos[i]);
-//                }
-//            }
             Connection conn = null;
             conn = objC.conexion();
             DatabaseMetaData md = conn.getMetaData();
@@ -59,11 +46,20 @@ public class Estudiantes {
 
             }
             Object[] elementos = tables.toArray();
-            String elementoSeleccionado = (String) JOptionPane.showInputDialog(null, "Seleccione un elemento:", "Lista de elementos", JOptionPane.PLAIN_MESSAGE, null, elementos, elementos[0]);
-            return elementoSeleccionado;
+            String elementoSeleccionado = (String) JOptionPane.showInputDialog(null, "Seleccione una tabla:", "Lista de elementos", JOptionPane.PLAIN_MESSAGE, null, elementos, elementos[0]);
+            if(elementoSeleccionado !=null){
+                return elementoSeleccionado;
+            }else if(flag == true){
+                JOptionPane.showMessageDialog(null,"No se ha seleccionado una tabla \n Cerrando el Programa...");
+                System.exit(0);
+            }else{
+                JOptionPane.showMessageDialog(null,"No se ha seleccionado ninguna tabla");
+                return elementoSeleccionado;
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            System.out.println("Error: " + e.toString());
         }
+        
         return null;
     }
 
@@ -91,8 +87,6 @@ public class Estudiantes {
                 if (i > 1) {
                 }
                 modelo.addColumn(rsmd.getColumnName(i));
-                //
-                //
             }
             while (rs.next()) {
                 for (int i = 0; i <= datos.length - 1; i++) {
@@ -101,7 +95,7 @@ public class Estudiantes {
                 modelo.addRow(datos);
             }
             tblEstudiantes.setModel(modelo);
-            jLabel7.setText(seleccion);
+            jLabel7.setText("Tabla "+seleccion);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -150,9 +144,9 @@ public class Estudiantes {
      * @param correo : JTextField
      */
     public void guardarEstudiantes(JTextField id, JTextField nombre, JTextField apellido,
-            JTextField numC, JTextField carrera, JTextField correo) {
+            JTextField numC, JTextField carrera, JTextField correo, String seleccion) {
         CConexion objC = new CConexion();
-        String sql = "INSERT INTO estudiantes (id,nombre,apellido,numCuenta,carrera,correo) VALUES(?,?,?,?,?,?);";
+        String sql = "INSERT INTO "+ seleccion +" (id,nombre,apellido,numCuenta,carrera,correo) VALUES(?,?,?,?,?,?);";
 
         try {
             CallableStatement callSt = objC.conexion().prepareCall(sql);
@@ -182,10 +176,10 @@ public class Estudiantes {
      * @param correo : JTextField
      */
     public void modificarEstudiante(JTextField id, JTextField nombre, JTextField apellido,
-            JTextField numC, JTextField carrera, JTextField correo) {
+            JTextField numC, JTextField carrera, JTextField correo, String seleccion) {
         CConexion objC = new CConexion();
-        String sql = "UPDATE estudiantes SET estudiantes.id=" + id.getText() + ",estudiantes.nombre=?,estudiantes.apellido=?,"
-                + "estudiantes.numCuenta=?,estudiantes.carrera=?,estudiantes.correo=? WHERE estudiantes.id=?;";
+        String sql = "UPDATE "+ seleccion +" SET "+seleccion+".id=" + id.getText() + ","+seleccion+".nombre=?,"+seleccion+".apellido=?,"
+                + ""+seleccion+".numCuenta=?,"+seleccion+".carrera=?,"+seleccion+".correo=? WHERE "+seleccion+".id=?;";
         try {
             CallableStatement callSt = objC.conexion().prepareCall(sql);
             //callSt.setString(1,id.getText());
