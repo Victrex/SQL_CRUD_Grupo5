@@ -115,6 +115,8 @@ public class FormularioCrud extends javax.swing.JFrame {
 
         txt_email.setEnabled(false);
 
+        txt_name.setEnabled(false);
+
         btn_save.setBackground(new java.awt.Color(153, 204, 0));
         btn_save.setText("Guardar");
         btn_save.setEnabled(false);
